@@ -19,7 +19,7 @@ func initDB() {
 		panic("failed to connect database")
 	}
 	fmt.Println("database connection successfuly")
-	database.DBConn.AutoMigrate(&models.News{})
+	database.DBConn.AutoMigrate(&models.News{}, &models.Author{})
 }
 
 func main() {

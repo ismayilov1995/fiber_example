@@ -29,8 +29,8 @@ func (n *News) Load(id interface{}) (*News, error) {
 }
 
 func (n *News) Create() (*News, error) {
-	if err := database.DBConn.Create(&n); err != nil {
-		return nil, err.Error
+	if res := database.DBConn.Create(&n); res.Error != nil {
+		return nil, res.Error
 	}
 	return n, nil
 }

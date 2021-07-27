@@ -7,6 +7,6 @@ import (
 func ApiRouters(app fiber.Router) {
 	a := app.Group("api/v1")
 	NewsRouter(a.Group("news"))
-	AuthRouter(a.Group("auth"))
+	AuthorRouter(a.Group("author"))
 	BookRouter(a.Group("book"))
 }
