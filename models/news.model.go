@@ -8,8 +8,8 @@ import (
 
 type News struct {
 	gorm.Model
-	Title   string `gorm:"unique"`
-	Content string
+	Title   string `gorm:"unique;not null;"`
+	Content string `gorm:"not null"`
 	Read    int
 }
 
@@ -23,12 +23,16 @@ func (n *News) Load(id interface{}) (*News, error) {
 	if err := database.DBConn.First(&n, id).Error; err != nil {
 		return nil, err
 	}
+	n.Read = n.Read + 1
+	database.DBConn.Save(&n)
 	return n, nil
 }
 
-func (n *News) Create() *News {
-	database.DBConn.Create(&n)
-	return n
+func (n *News) Create() (*News, error) {
+	if err := database.DBConn.Create(&n); err != nil {
+		return nil, err.Error
+	}
+	return n, nil
 }
 
 func (n *News) Delete(id interface{}) error {

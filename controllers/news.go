@@ -25,7 +25,11 @@ func (n *NewsController) Load(c *fiber.Ctx) error {
 func (n *NewsController) Create(c *fiber.Ctx) error {
 	news := new(models.News)
 	c.BodyParser(&news)
-	return c.JSON(news.Create())
+	if news, err := news.Create(); err != nil {
+		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"message": err.Error()})
+	} else {
+		return c.JSON(news)
+	}
 }
 
 func (n *NewsController) Delete(c *fiber.Ctx) error {

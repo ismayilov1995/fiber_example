@@ -30,6 +30,12 @@ func main() {
 		return c.SendString("Hello, World!")
 	})
 
+	app.Get("/reset", func(c *fiber.Ctx) error {
+		database.DBConn.Migrator().DropTable(&models.News{})
+		database.DBConn.AutoMigrate(&models.News{})
+		return c.SendString("db is dropped")
+	})
+
 	routers.ApiRouters(app)
 
 	app.Listen(":3000")
