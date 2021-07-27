@@ -7,19 +7,19 @@ import (
 	"fmt"
 
 	"github.com/gofiber/fiber/v2"
-	"gorm.io/driver/sqlite"
+	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 )
 
 func initDB() {
 	var err error
-	database.DBConn, err = gorm.Open(sqlite.Open("book.db"), &gorm.Config{})
+	dsn := "host=localhost user=postgres password=7090698 dbname=vnews port=5432 sslmode=disable TimeZone=Asia/Shanghai"
+	database.DBConn, err = gorm.Open(postgres.Open(dsn), &gorm.Config{})
 	if err != nil {
 		panic("failed to connect database")
 	}
 	fmt.Println("database connection successfuly")
-	database.DBConn.AutoMigrate(&models.Book{})
-	fmt.Println("database migrated")
+	database.DBConn.AutoMigrate(&models.News{})
 }
 
 func main() {

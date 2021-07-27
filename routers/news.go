@@ -10,7 +10,7 @@ var n = new(controllers.NewsController)
 
 func NewsRouter(r fiber.Router) {
 	r.Get("/", n.LoadAll)
-	r.Get("create", n.Create)
+	r.Post("create", n.Create)
 	r.Get(":slug", n.Load)
-	r.Get("delete/:slug", n.Delete)
+	r.Delete(":slug", n.Delete)
 }
