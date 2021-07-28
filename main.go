@@ -31,8 +31,8 @@ func main() {
 	})
 
 	app.Get("/reset", func(c *fiber.Ctx) error {
-		database.DBConn.Migrator().DropTable(&models.News{})
-		database.DBConn.AutoMigrate(&models.News{})
+		database.DBConn.Migrator().DropTable(&models.News{}, &models.Author{})
+		database.DBConn.AutoMigrate(&models.News{}, &models.Author{})
 		return c.SendString("db is dropped")
 	})
 

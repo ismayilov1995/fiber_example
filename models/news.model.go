@@ -2,19 +2,26 @@ package models
 
 import (
 	"fiber_exp/database"
+	"fmt"
 
 	"gorm.io/gorm"
 )
 
 type News struct {
 	gorm.Model
-	Title   string `gorm:"unique;not null;"`
-	Content string `gorm:"not null"`
-	Read    int
+	Title    string `gorm:"unique;not null;"`
+	Content  string `gorm:"not null"`
+	Read     int
+	AuthorID int
+	Author   Author
 }
 
 func (n *News) LoadAll() *[]News {
 	var allNews []News
+	var news News
+	var user Author
+	database.DBConn.Model(&user).Association("Author").Find(&allNews)
+	fmt.Println(news)
 	database.DBConn.Find(&allNews)
 	return &allNews
 }
